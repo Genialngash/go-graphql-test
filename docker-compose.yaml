@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  api:
+    build:
+      context: .
+      # Correct the path to your Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - 8080:3000
+    # Important to bind/mount your codebase dir to /app dir for live reload
+    volumes:
+      - ./:/app
+  # mysql:
+  #   image: mysql:8.0
+  #   volumes:
+  #     - mysqldata:/var/lib/mysql
+  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_as_ci --default-authentication-plugin=mysql_native_password
+  #   environment:
+  #     MYSQL_USER: root
+  #     MYSQL_ROOT_PASSWORD: root
+  #   ports:
+  #     - 3306:3306
+volumes:
+  mysqldata:
+    driver: local

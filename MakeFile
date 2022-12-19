@@ -1,0 +1,8 @@
+.PHONY:
+
+air-init:
+	docker compose run --rm app air init
+mod-tidy:
+	docker compose run --rm app go mod tidy
+init-go-mod:
+	docker compose run --rm app go mod init github.com/Genialngash/graphql-go-test
