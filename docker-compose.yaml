@@ -6,7 +6,7 @@ services:
       # Correct the path to your Dockerfile
       dockerfile: Dockerfile
     ports:
-      - 8080:3000
+      - 8080:8080
     # Important to bind/mount your codebase dir to /app dir for live reload
     volumes:
       - ./:/app
