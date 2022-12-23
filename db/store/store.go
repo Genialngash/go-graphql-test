@@ -25,8 +25,7 @@ func (s *Store) AddTodo(t *model.NewTodo) error {
 		Text: t.Text,
 		Done: false,
 		User: &model.User{
-			ID:   t.UserID,
-			Name: "danche",
+			ID: t.UserID,
 		},
 	})
 	return nil
