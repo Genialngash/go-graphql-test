@@ -8,16 +8,26 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/Genialngash/graphql-go-test/graph"
+	"github.com/Genialngash/graphql-go-test/postgress"
+	"github.com/go-pg/pg/v10"
 )
 
 const defaultPort = "8080"
 
 func main() {
+	DB := postgress.New(&pg.Options{
+		User:     "ngash",
+		Password: "login",
+		Database: "meetup_dev",
+	})
+	defer DB.Close()
+
+	DB.AddQueryHook(postgress.DbLogger{})
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
 	}
-
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))

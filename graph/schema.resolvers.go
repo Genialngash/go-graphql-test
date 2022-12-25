@@ -6,10 +6,28 @@ package graph
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/Genialngash/graphql-go-test/graph/model"
 )
+
+// User is the resolver for the user field.
+func (r *meetupResolver) User(ctx context.Context, obj *model.Meetup) (*model.User, error) {
+	user := *new(model.User)
+
+	for _, u := range users {
+		if user.ID == obj.UserId {
+			user = u
+			break
+		}
+	}
+
+	if &user == nil {
+		return nil, errors.New("user with id not found")
+	}
+	return &user, nil
+}
 
 // CreateMeetUp is the resolver for the createMeetUp field.
 func (r *mutationResolver) CreateMeetUp(ctx context.Context, input model.NewMeetup) (*model.Meetup, error) {
@@ -18,13 +36,25 @@ func (r *mutationResolver) CreateMeetUp(ctx context.Context, input model.NewMeet
 
 // Meetups is the resolver for the meetups field.
 func (r *queryResolver) Meetups(ctx context.Context) ([]*model.Meetup, error) {
-	panic(fmt.Errorf("not implemented: Meetups - meetups"))
+	return meetups, nil
 }
 
 // Meetups is the resolver for the meetups field.
 func (r *userResolver) Meetups(ctx context.Context, obj *model.User) ([]*model.Meetup, error) {
-	panic(fmt.Errorf("not implemented: Meetups - meetups"))
+ var meetups []*model.Meetup
+
+
+ for _ , m := range meetups {
+	if m.UserId == obj.ID {
+		meetups = append(meetups, m)
+		
+	}
+ }
+ return meetups,nil
 }
+
+// Meetup returns MeetupResolver implementation.
+func (r *Resolver) Meetup() MeetupResolver { return &meetupResolver{r} }
 
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
@@ -35,6 +65,40 @@ func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 // User returns UserResolver implementation.
 func (r *Resolver) User() UserResolver { return &userResolver{r} }
 
+type meetupResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+var meetups = []*model.Meetup{
+	{
+		ID:          "1",
+		Name:        "ngash",
+		Description: "a description",
+		UserId:      "1",
+	},
+	{
+		ID:          "2",
+		Name:        "danche",
+		Description: "a  second description",
+		UserId:      "2",
+	},
+}
+var users = []model.User{
+	{
+		ID:       "1",
+		Username: "danche",
+		Email:    "a email.com",
+	},
+	{
+		ID:       "2",
+		Username: "ngahs",
+		Email:    "ngash@gmail.com",
+	},
+}
