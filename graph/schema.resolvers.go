@@ -36,21 +36,21 @@ func (r *mutationResolver) CreateMeetUp(ctx context.Context, input model.NewMeet
 
 // Meetups is the resolver for the meetups field.
 func (r *queryResolver) Meetups(ctx context.Context) ([]*model.Meetup, error) {
-	return meetups, nil
+
+	return r.MeetupRepo.GetMeetups()
 }
 
 // Meetups is the resolver for the meetups field.
 func (r *userResolver) Meetups(ctx context.Context, obj *model.User) ([]*model.Meetup, error) {
- var meetups []*model.Meetup
+	var meetups []*model.Meetup
 
+	for _, m := range meetups {
+		if m.UserId == obj.ID {
+			meetups = append(meetups, m)
 
- for _ , m := range meetups {
-	if m.UserId == obj.ID {
-		meetups = append(meetups, m)
-		
+		}
 	}
- }
- return meetups,nil
+	return meetups, nil
 }
 
 // Meetup returns MeetupResolver implementation.

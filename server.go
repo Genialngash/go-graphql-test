@@ -28,7 +28,10 @@ func main() {
 	if port == "" {
 		port = defaultPort
 	}
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
+		MeetupRepo: postgress.MeetupsRepo{DB: DB},
+		UsersRepo:  postgress.UsersRepo{DB: DB},
+	}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
