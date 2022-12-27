@@ -16,14 +16,15 @@ const defaultPort = "8080"
 
 func main() {
 	DB := postgress.New(&pg.Options{
+		Addr:     "postgres:5432",
 		User:     "ngash",
 		Password: "login",
 		Database: "meetup_dev",
 	})
+
 	defer DB.Close()
 
 	DB.AddQueryHook(postgress.DbLogger{})
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
