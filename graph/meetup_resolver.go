@@ -13,5 +13,6 @@ func (r *Resolver) Meetup() MeetupResolver { return &meetupResolver{r} }
 // User is the resolver for the user field.
 func (r *meetupResolver) User(ctx context.Context, obj *model.Meetup) (*model.User, error) {
 
-	return r.UsersRepo.GetUserById(obj.UserId)
+	return getUserLoader(ctx).Load(obj.ID)
+	
 }
