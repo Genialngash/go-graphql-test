@@ -11,8 +11,24 @@ type MeetupsRepo struct {
 	DB *pg.DB
 }
 
-func (m *MeetupsRepo) GetMeetups() ([]*model.Meetup, error) {
+func (m *MeetupsRepo) GetMeetups(filter *model.MeetUpFilter, limit, offset *int) ([]*model.Meetup, error) {
 	var meetups []*model.Meetup
+	query := m.DB.Model(&meetups).Order("id")
+	if filter != nil {
+		if filter.Name != nil && *filter.Name != "" {
+			query.Where("name ILIKE ?", fmt.Sprintf("%%%s%%", *filter.Name))
+
+		}
+	}
+
+	if limit != nil {
+		query.Limit(*limit)
+
+	}
+	if offset != nil {
+		query.Offset(*offset)
+
+	}
 	err := m.DB.Model(&meetups).Select()
 	if err != nil {
 		fmt.Println(err)

@@ -1,13 +1,13 @@
 package handlers
 
 import (
- "net/http"
+	"net/http"
 
- "github.com/labstack/echo"
+	"github.com/labstack/echo"
 )
 
 func Welcome() echo.HandlerFunc {
- return func(c echo.Context) error {
-  return c.String(http.StatusOK, "Welcome!, ngash")
- }
+	return func(c echo.Context) error {
+		return c.String(http.StatusOK, "Welcome!, ngash")
+	}
 }
