@@ -6,3 +6,6 @@ mod-tidy:
 	docker compose run --rm app go mod tidy
 init-go-mod:
 	docker compose run --rm app go mod init github.com/Genialngash/graphql-go-test
+go-generate:
+   - go run github.com/99designs/gqlgen generate
+
