@@ -1,6 +1,8 @@
 # Where are all the schema files located? globs are supported eg  src/**/*.graphqls
 schema:
-  - graph/*.graphql
+  - graph/schemas/*.graphql
+  - ../*.graphql
+  - '*.graphql'
 
 # Where should the generated server code go?
 exec:
@@ -32,13 +34,16 @@ models:
 
 # Where should the resolver implementations go?
 resolver:
-  filename: graphql/schema.resolvers.go
+  type: Resolver
   layout: follow-schema
-  dir: graph
-  package: graph
+  dir: resolvers
+  package: resolvers
+  # filename_template: meetup.resolver.resolvers.go
+
 
 # Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
-# struct_tag: json
+struct_tag: bson
+   
 
 # Optional: turn on to use []Thing instead of []*Thing
 # omit_slice_element_pointers: false

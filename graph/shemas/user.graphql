@@ -1,0 +1,11 @@
+
+type User {
+  id:ID! @goField(forceResolver: true)
+  username: String!
+  email:String
+  meetups:[Meetup!]!
+}
+
+extend type Query {
+    gettingusers:[User!]!
+}

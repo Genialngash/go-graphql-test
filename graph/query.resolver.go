@@ -7,7 +7,7 @@ import (
 )
 
 // Meetups is the resolver for the meetups field.
-func (r *queryResolver) Meetups(ctx context.Context, filter *model.MeetUpFilter, limit *int, offset *int) ([]*model.Meetup, error) {
+func (r *queryResolver) Getmeetups(ctx context.Context, filter *model.MeetUpFilter, limit *int, offset *int) ([]*model.Meetup, error) {
 
 	return r.MeetupRepo.GetMeetups(filter,limit,offset)
 }

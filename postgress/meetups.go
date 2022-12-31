@@ -15,8 +15,8 @@ func (m *MeetupsRepo) GetMeetups(filter *model.MeetUpFilter, limit, offset *int)
 	var meetups []*model.Meetup
 	query := m.DB.Model(&meetups).Order("id")
 	if filter != nil {
-		if filter.Name != nil && *filter.Name != "" {
-			query.Where("name ILIKE ?", fmt.Sprintf("%%%s%%", *filter.Name))
+		if filter.Name != "" {
+			query.Where("name ILIKE ?", fmt.Sprintf("%%%s%%", filter.Name))
 
 		}
 	}

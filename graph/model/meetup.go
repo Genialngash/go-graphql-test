@@ -5,3 +5,7 @@ type Meetup struct {
 	Description string `json:"description"`
 	UserId       string   `json:"userId"`
 } 
+
+type MeetUpFilter struct {
+	Name string
+}

@@ -1,0 +1,40 @@
+directive @goModel(model: String, models: [String!]) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+directive @goField(forceResolver: Boolean, name: String) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+directive @hasRole(role: Role!) on FIELD_DEFINITION
+enum Role {
+    ADMIN
+    USER
+}
+
+type Meetup {
+  id:ID!
+  name:String!
+  description:String
+  user: User!
+}
+
+
+input MeetUpFilter {  
+name: String
+}
+
+input NewMeetup{
+  name:String!
+  description: String!
+}
+input UpdateMeetup{
+  name:String
+  description: String
+}
+
+
+type Query {
+  getmeetups(filter: MeetUpFilter, limit: Int = 10, offset: Int =0): [Meetup!]!
+
+}
+
+
+type Mutation {
+  createMeetUp(input:NewMeetup!):Meetup!
+  updateMeetup(id:ID!, input: UpdateMeetup):Meetup!
+}
